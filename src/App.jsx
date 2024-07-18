@@ -77,6 +77,7 @@ import Login from './routes/login/login';
 import Register from './routes/register/register';
 import ProfileUpdatePage from './routes/profileUpdatePage/profileUpdatePage';
 import NewPostPage from './routes/newPostPage/newPostPage';
+import NotFound from './routes/NotFound/NotFound';
 import { Layout, RequireAuth } from './routes/layout/layout';
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
           <Route path=":id" element={<SinglePage />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/" element={<RequireAuth />}>
           <Route path="profile" element={<ProfilePage />} />
