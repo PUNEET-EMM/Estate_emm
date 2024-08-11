@@ -1,23 +1,38 @@
-import "./singlePage.scss";
+import { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
-import { useNavigate, useLoaderData } from "react-router-dom";
-import DOMPurify from "dompurify";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import { AuthContext } from "../../context/AuthContext";
+import "./singlePage.scss";
 
 function SinglePage() {
-  const post = useLoaderData();
-  const [saved, setSaved] = useState(post.isSaved);
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [saved, setSaved] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await apiRequest(`/posts/${id}`);
+        setPost(response.data);
+        setSaved(response.data.isSaved);
+        console.log(post)
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPost();
+  }, [id]);
 
   const handleSave = async () => {
     if (!currentUser) {
       navigate("/login");
     }
-    // AFTER REACT 19 UPDATE TO USEOPTIMISTIK HOOK
     setSaved((prev) => !prev);
     try {
       await apiRequest.post("/users/save", { postId: post.id });
@@ -26,6 +41,8 @@ function SinglePage() {
       setSaved((prev) => !prev);
     }
   };
+
+  if (!post) return <p>Loading...</p>;
 
   return (
     <div className="singlePage">
@@ -56,6 +73,11 @@ function SinglePage() {
           </div>
         </div>
       </div>
+
+
+
+
+
       <div className="features">
         <div className="wrapper">
           <p className="title">General</p>
@@ -155,8 +177,20 @@ function SinglePage() {
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
     </div>
   );
 }
 
 export default SinglePage;
+
+
+
+
+
