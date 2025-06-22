@@ -14,6 +14,26 @@ function SinglePage() {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
+
+
+  const handleChat = async () => {
+  if (!currentUser) {
+    navigate("/login");
+    return;
+  }
+
+  try {
+    const res = await apiRequest.post("/chats", {
+      receiverId: post.user.id,
+    });
+
+    navigate(`/profile`);
+  } catch (err) {
+    console.error("Failed to start chat", err);
+  }
+};
+
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -161,7 +181,7 @@ function SinglePage() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={handleChat}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import './mapSetup'; // Import your map setup file
+import './mapSetup'; 
 import './map.scss';
 import 'leaflet/dist/leaflet.css';
 import Pin from '../pin/Pin';
@@ -11,15 +11,15 @@ function Map({ items }) {
       center={
         items.length === 1
           ? [items[0].latitude, items[0].longitude]
-          : [52.4797, -1.90269]
+          : [39.8283, -98.5795] 
       }
-      zoom={7}
+      zoom={items.length === 1 ? 8 : 4} 
       scrollWheelZoom={false}
-      className='map'
+      className="map"
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {items.map(item => (
         <Pin item={item} key={item.id} />

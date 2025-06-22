@@ -10,6 +10,7 @@ import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loader";
+import ContactUs from "./routes/contactUs/ContactUs";
 
 function App() {
   const router = createBrowserRouter([
@@ -38,6 +39,10 @@ function App() {
           path: "/register",
           element: <Register />,
         },
+        {
+  path: "/contact",
+  element: <ContactUs />,
+}
       ],
     },
     {
